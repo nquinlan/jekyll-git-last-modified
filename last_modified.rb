@@ -3,16 +3,22 @@ module LastModified
     def generate(site)
 		@site = site
 		puts "generating last modified dates"
-		@site.pages.each do |page, index|
-			page_source = source(page)
-			last_modified = `git log -1 --format="%ad" -- "#{page_source}"`
-			page.data["last_modified"] = last_modified
-			# @site.pages[index].data["last_modified"] = last_modified
+		@site.pages.each do |page|
+			set_last_modified_date(page)
+		end
+		@site.posts.each do |post|
+			set_last_modified_date(post)
 		end
     end
 
-	def source(page)
-		@site.source + "/" + page.path
+	def source(post_or_page)
+		@site.source + "/" + post_or_page.path
+	end
+
+	def set_last_modified_date(post_or_page)
+		entity_source = source(post_or_page)
+		last_modified = `git log -1 --format="%ad" -- "#{entity_source}"`
+		post_or_page.data["last_modified"] = last_modified
 	end
   end
 end
