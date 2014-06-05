@@ -2,7 +2,6 @@ module LastModified
   class Generator < Jekyll::Generator
     def generate(site)
 		@site = site
-		puts "generating last modified dates"
 		@site.pages.each do |page|
 			set_last_modified_date(page)
 		end
