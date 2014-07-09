@@ -1,5 +1,6 @@
 module LastModified
   class Generator < Jekyll::Generator
+	priority :highest
     def generate(site)
 		@site = site
 		@site.pages.each do |page|
